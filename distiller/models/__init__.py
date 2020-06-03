@@ -192,6 +192,20 @@ def _create_imagenet_model(arch, pretrained):
         model = pretrainedmodels.__dict__[arch](
             num_classes=1000,
             pretrained=(dataset if pretrained else None))
+    if model is None and arch == 'mobilenet' and pretrained:
+        model = imagenet_extra_models.__dict__[arch]()
+        path = '/mnt/data/bodo/snntoolbox_experiments/imagenet/mobilenet/69.53.pth'
+        state_dict = torch.load(path)
+        new_state_dict = {}
+        for k, v in state_dict.items():
+            k = str(k).replace('features', 'model').replace('classifier', 'fc')
+            new_state_dict[k] = v
+        model.load_state_dict(new_state_dict)
+        model.input_space = 'RGB'
+        model.input_size = [3, 224, 224]
+        model.input_range = [0, 1]
+        model.mean = [0.485, 0.456, 0.406]
+        model.std = [0.229, 0.224, 0.225]
     if model is None:
         error_message = ''
         if arch not in IMAGENET_MODEL_NAMES:

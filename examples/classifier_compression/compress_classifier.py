@@ -58,10 +58,9 @@ import distiller
 from distiller.models import create_model
 import distiller.apputils.image_classifier as classifier
 import distiller.apputils as apputils
-import parser
+from examples.classifier_compression import parser
 import os
 import numpy as np
-from ptq_lapq import image_classifier_ptq_lapq
 
 
 # Logger handle
@@ -112,6 +111,7 @@ def handle_subapps(model, criterion, optimizer, compression_scheduler, pylogger,
         do_exit = True
     elif args.evaluate:
         if args.quantize_eval and args.qe_lapq:
+            from ptq_lapq import image_classifier_ptq_lapq
             image_classifier_ptq_lapq(model, criterion, pylogger, args)
         else:
             test_loader = load_test_data(args)

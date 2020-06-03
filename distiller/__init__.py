@@ -36,10 +36,10 @@ del dict_config
 del thinning
 
 # Distiller version
-try:
-    __version__ = pkg_resources.require("distiller")[0].version
-except pkg_resources.DistributionNotFound:
-    __version__ = "Unknown"
+# try:
+#     __version__ = pkg_resources.require("distiller")[0].version
+# except pkg_resources.DistributionNotFound:
+__version__ = "Unknown"
 
 
 def __check_pytorch_version():
