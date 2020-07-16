@@ -182,6 +182,10 @@ def imagenet_get_datasets(data_dir, arch, load_train=True, load_test=True):
     else:
         normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                          std=[0.229, 0.224, 0.225])
+        # Use this normalization to get values in range [0, 1]:
+        # normalize2 = transforms.Normalize(mean=[0, 0, 0],
+        #                                   std=[2.2489083, 2.42857143, 2.64])
+        # normalize = transforms.Compose([normalize, normalize2])
     train_dir = os.path.join(data_dir, 'train')
     test_dir = os.path.join(data_dir, 'val')
 
